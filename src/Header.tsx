@@ -1,4 +1,5 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+
 import {
   House,
   Search,
@@ -6,8 +7,14 @@ import {
   ShoppingCart,
   UserPen,
 } from "lucide-react";
+import { useCart } from "./context/CartContext";
 
 export default function Header() {
+  const { cartItems, increaseQty } = useCart();
+  console.log(cartItems);
+
+  const navigate = useNavigate();
+
   return (
     <header className=" bg-white shadow-sm ">
       <div className="flex gap-80 items-center mx-27 py-4">
@@ -74,7 +81,7 @@ export default function Header() {
             </NavLink>
           </nav>
         </div>
-        <div className="flex items-center gap-6">
+        <div className="flex items-center  gap-6">
           <div className="flex items-center gap-2 bg-gray-100 px-4 py-2.5 w-[250px] h-[44px] rounded-lg text-gray-500">
             <Search size={17} />
             <input
@@ -83,7 +90,12 @@ export default function Header() {
               className="text-[16px]"
             />
           </div>
-          <ShoppingCart size={25} />
+          <div className="relative  w-10 h-10 flex items-center justify-center">
+            <span className="absolute -top-2 -right-2 flex items-center justify-center  text-white bg-black  w-5 h-5  rounded-full">
+              {cartItems.reduce((total, item) => total + (item.qty || 1), 0)}
+            </span>
+            <ShoppingCart size={25} onClick={() => navigate("/cart")} />
+          </div>
         </div>
       </div>
     </header>
