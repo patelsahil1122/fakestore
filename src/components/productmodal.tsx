@@ -46,7 +46,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
               <h2 className="text-2xl font-bold">{product.title}</h2>
               <p className="mt-2 text-gray-600">{product.description}</p>
               <p className="mt-2 text-[15px] text-gray-500">
-                ⭐ {product.rating.rate} ({product.rating.count})
+                {product.rating.rate} ({product.rating.count})
               </p>
             </div>
 
