@@ -21,10 +21,10 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
 
   return (
     <div
-      className="fixed inset-0 bg-transparent bg-opacity-50 backdrop-blur-sm flex items-center justify-center "
+      className=" fixed inset-0 bg-transparent bg-opacity-50 backdrop-blur-sm flex items-center justify-center shadow-sm "
       onClick={onClose}
     >
-      <div className="bg-white rounded-2xl p-6 w-[90%] max-w-[600px] relative shadow-lg">
+      <div className=" bg-white rounded-2xl p-6  w-[100%] mb:h-[100%]  max-w-[796px] relative shadow-lg">
         <button
           onClick={onClose}
           className="absolute top-3 right-3 text-gray-500 hover:text-black"
