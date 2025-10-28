@@ -1,33 +1,23 @@
-import axios from "axios";
 import { ShoppingCart } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useCart } from "../context/CartContext";
 import ProductModal from "../components/productmodal";
-
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-  rating: {
-    rate: number;
-    count: number;
-  };
-}
+import { useNavigate, useParams } from "react-router-dom";
+import { useProducts } from "../context/ProductContext";
 
 export default function Products() {
-  const [productsdata, setProductsdata] = useState<Product[]>([]);
-  const [filterproducts, setFilterproducts] = useState<Product[]>([]);
-  const [categorylenght, setCategorylenght] = useState<string | undefined>();
-  const [isActive, setIsActive] = useState<string>("");
+  const { products, loading, error } = useProducts();
+  const params = useParams();
+  const navigate = useNavigate();
+  const { category } = params;
+  const [filterproducts, setFilterproducts] = useState(products);
+  const [isActive, setIsActive] = useState<string | undefined>(category);
 
   const { addToCart } = useCart();
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
-  const handleOpenModal = (product: Product) => {
+  const handleOpenModal = (product: any) => {
     setSelectedProduct(product);
     setIsOpenModal(true);
   };
@@ -38,36 +28,21 @@ export default function Products() {
   };
 
   useEffect(() => {
-    async function data() {
-      try {
-        const API = await axios.get<Product[]>(
-          "https://fakestoreapi.com/products"
-        );
-        setProductsdata(API.data);
-        setFilterproducts(API.data);
-      } catch (error) {
-        console.error("Data not found:", error);
-      }
-    }
-    data();
-  }, []);
-
-  const showCategory = (category: string) => {
-    if (!category) {
-      setFilterproducts(productsdata);
-      setCategorylenght(undefined);
+    if (category) {
+      setFilterproducts(products.filter((p) => p.category === category));
     } else {
-      const filterdata = productsdata.filter((x) => x.category === category);
-      setFilterproducts(filterdata);
-      setCategorylenght(category);
+      setFilterproducts(products);
     }
-  };
+  }, [category, products]);
+
+  if (loading) return <p className="text-gray-600">Loading products...</p>;
+  if (error) return <p className="text-red-500">{error}</p>;
 
   return (
     <div className="mt-4 mx-22 w-[1216px]">
       <h1 className="text-[30px] font-bold">
-        {categorylenght
-          ? categorylenght.charAt(0).toUpperCase() + categorylenght.slice(1)
+        {category
+          ? category.charAt(0).toUpperCase() + category.slice(1)
           : "All Products"}
       </h1>
 
@@ -88,8 +63,9 @@ export default function Products() {
                 : "bg-gray-100 hover:bg-gray-200 rounded-xl"
             }`}
             onClick={() => {
-              setIsActive(category.value || "All products");
-              showCategory(category.value);
+              setIsActive(category.value);
+              if (category.value) navigate(`/products/${category.value}`);
+              else navigate(`/products`);
             }}
           >
             {category.label}

@@ -11,7 +11,7 @@ import {
 import { useCart } from "./context/CartContext";
 
 export default function Header() {
-  const { cartItems, increaseQty } = useCart();
+  const { cartItems } = useCart();
   console.log(cartItems);
 
   const navigate = useNavigate();
@@ -72,7 +72,7 @@ export default function Header() {
               className={({ isActive }) =>
                 `flex items-center text-gray-600 text-[16px] gap-2 px-4 py-2 font-medium ${
                   isActive
-                    ? "text-white  bg-black rounded-xl"
+                    ? "text-white bg-black rounded-xl"
                     : "bg-white-500 hover:bg-gray-100 rounded-xl"
                 }`
               }
