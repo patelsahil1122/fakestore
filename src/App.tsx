@@ -1,4 +1,3 @@
-import React from "react";
 import AllRoutes from "./AllRoutes.tsx";
 
 function App() {

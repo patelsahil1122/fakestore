@@ -6,18 +6,19 @@ import {
   ShoppingBasket,
   ShoppingCart,
   UserPen,
+  UserRoundPen,
 } from "lucide-react";
 import { useCart } from "./context/CartContext";
 
 export default function Header() {
-  const { cartItems, increaseQty } = useCart();
+  const { cartItems } = useCart();
   console.log(cartItems);
 
   const navigate = useNavigate();
 
   return (
     <header className=" bg-white shadow-sm ">
-      <div className="flex gap-80 items-center mx-27 py-4">
+      <div className="flex gap-80 items-center lg:mx-27 py-4">
         <div className="flex gap-8 items-center ">
           <h1 className="font-sans font-bold text-2xl text-gray-900">
             Fakestore
@@ -71,7 +72,7 @@ export default function Header() {
               className={({ isActive }) =>
                 `flex items-center text-gray-600 text-[16px] gap-2 px-4 py-2 font-medium ${
                   isActive
-                    ? "text-white  bg-black rounded-xl"
+                    ? "text-white bg-black rounded-xl"
                     : "bg-white-500 hover:bg-gray-100 rounded-xl"
                 }`
               }
@@ -95,6 +96,13 @@ export default function Header() {
               {cartItems.reduce((total, item) => total + (item.qty || 1), 0)}
             </span>
             <ShoppingCart size={25} onClick={() => navigate("/cart")} />
+          </div>
+          <div>
+            <UserRoundPen
+              size={36}
+              strokeWidth={1}
+              onClick={() => navigate("/AllProfile")}
+            />
           </div>
         </div>
       </div>

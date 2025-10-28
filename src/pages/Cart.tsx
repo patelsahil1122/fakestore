@@ -1,7 +1,6 @@
 import { ShoppingBag, Trash } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
-import Products from "./Products";
 
 function Cart() {
   const { cartItems, removeFromCart, increaseQty, decreaseQty } = useCart();
@@ -84,17 +83,6 @@ function Cart() {
                     {shipping === 0 ? "FREE" : `$ ${shipping}`}
                   </span>
                 </p>
-                {/* {Total <= 100 ? (
-                  <p className="text-gray-600 flex justify-between">
-                    Shipping
-                    <span className="font-semibold"> $ 10</span>
-                  </p>
-                ) : (
-                  <p className="text-gray-600 flex justify-between">
-                    Shipping
-                    <span className="font-semibold"> FREE</span>
-                  </p>
-                )} */}
                 <p className="border-t border-gray-300  w-full "></p>
                 <p className=" flex justify-between">
                   Total {""}
